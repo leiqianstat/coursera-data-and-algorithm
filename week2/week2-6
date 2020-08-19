@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+using std::cin;
+using std::cout;
+using std::vector;
+using std::min;
+long long huge_fibonacci(long long n) {
+    if(n<=1)
+        return n;
+    vector<long long> v;
+    v.push_back(0);
+    v.push_back(1);
+    for (long long i = 2; i <9999999 ; ++i) {
+        //9999999这个数字只是为了算出模10的循环节，因为用i<n的话，可能循环节比n大，从而导致算不出
+        v.push_back((v[i - 1] + v[i - 2])%10);//在循环内取模，减少运算时间
+        if(v[i-1]==0 && v[i]==1)//判断循环节终止条件，顺序出现0和1
+            break;
+    }   //由2-5已知，模10的循环节为60
+    long long k=v.size();//如果在给定的n的范围内存在的话，k-2就是循环节长度
+    long long mol= 0;
+    for (long long i = 0; i < min((k-1),n+1); ++i) {
+        //注意i的范围，i<k-1 and i<n+1,确保i可以取到
+        mol=(mol+v[i])%10;
+    }
+    long long a = n/(k-2);//n=a*(k-2)+r
+    long long sum=0;
+    for (long long i = 0; i <n%(k-2)+1 ; ++i) {
+        //注意i的范围，i<r+1,确保可以取到r
+        sum+=v[i];
+    }
+    return (mol*a+sum)%10;//a0到an的和模10=（循环节之和*循环节次数+剩余数字）模10
+}
+
+
+int main(){
+    long long n = 0;
+    cin>>n;
+    long long a=huge_fibonacci(n);
+    cout<<a<<"\n";
+    return 0;
+}
