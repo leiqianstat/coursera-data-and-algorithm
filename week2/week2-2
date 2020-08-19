@@ -1,0 +1,23 @@
+#include <iostream>
+using std::cin;
+using std::cout;
+int fibonacci(int n) {
+    if(n<=1)
+        return n;
+    long long last=0;
+    long long current=1;
+    for (long long i = 0; i <n-1 ; ++i) {
+        long long temp=last;
+        last=current;
+        current=(temp+current)%10;//在循环内直接取模，减少运算
+    }
+    return current;
+}
+
+int main(){
+    long long n = 0;
+    cin>>n;
+    int a=fibonacci(n);
+    cout<<a<<"\n";
+    return 0;
+}
