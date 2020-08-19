@@ -1,0 +1,21 @@
+#include <iostream>
+using std::cin;
+using std::cout;
+using std::max;
+using std::min;
+int gcd(int a,int b) {
+    while(a*b != 0){
+        int c = max(a, b) % min(a, b);
+        a=min(a,b);
+        b=c;
+    }//辗转相除法
+    return max(a,b);
+}
+
+int main(){
+    int a = 0;
+    int b = 0;
+    cin>>a>>b;
+    cout<<gcd(a,b)<<"\n";
+    return 0;
+}
